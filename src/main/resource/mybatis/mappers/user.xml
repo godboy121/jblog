@@ -10,13 +10,28 @@
     
     ]]>
 	</insert>
-	
+
 	<select id="login" parameterType="map" resultType="uservo">
 	<![CDATA[
-	select id, password from users where id=#{id} and password=#{password}
+	select users_no as no,id,name from users where id=#{id} and password=#{password}
+	]]>
+	</select>
+
+	<select id="getByNo" parameterType="uservo" resultType="int">
+	<![CDATA[
+	select users_no from users where id=#{id} and password=#{password}
 	]]>
 	</select>
 	
-	
+	<select id="getUserID" parameterType="string" resultType="uservo">
+	<![CDATA[
+ 	select * from users where id=#{id}
+	]]>
+	</select>
+
+
+
+
+
 
 </mapper>

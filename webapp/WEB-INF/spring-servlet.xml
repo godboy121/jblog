@@ -14,7 +14,10 @@
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
 	<mvc:annotation-driven>
-	
+		<mvc:argument-resolvers>
+			<bean class="com.bit2016.jblog.security.AuthUserHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+
 
 		<mvc:message-converters>
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -37,6 +40,8 @@
 
 
 		</mvc:message-converters>
+
+
 	</mvc:annotation-driven>
 
 	<!-- the mvc resources tag does the magic -->
@@ -84,8 +89,8 @@
 
 		<!-- defaultEncoding -->
 		<property name="defaultEncoding" value="utf-8" />
-		
-		
+
+
 
 	</bean>
 

@@ -34,5 +34,7 @@ public class UserController {
 		userService.join(vo);
 		return "user/joinsuccess";
 	}
+	
+
 
 }
