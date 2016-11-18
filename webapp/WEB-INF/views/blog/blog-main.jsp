@@ -14,9 +14,7 @@
 		<div id="header">
 			<h1>${blogVo.title }</h1>
 			<ul>
-				<li><a href="">로그인</a></li>
-				<li><a href="">로그아웃</a></li>
-				<li><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">블로그 관리</a></li>
+				<c:import url="/WEB-INF/views/includes/blog_header.jsp"/>
 			</ul>
 		</div>
 		<div id="wrapper">
@@ -42,7 +40,7 @@
 
 		<div id="extra">
 			<div class="blog-logo">
-				<img src="${pageContext.request.contextPath}/${urlImage }">
+				<img src="${pageContext.request.contextPath}/assets/logo/${blogVo.logo}">
 			</div>
 		</div>
 

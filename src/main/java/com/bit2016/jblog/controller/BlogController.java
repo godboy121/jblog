@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bit2016.jblog.security.AuthUser;
 import com.bit2016.jblog.service.BlogService;
@@ -52,7 +53,7 @@ public class BlogController {
 //			return "redirect:/"+id;
 //		}
 		
-		BlogVo vo1=blogService.showtitle(authUser.getNo());	//blog-admin-basic.jsp파일에 vo의 타이틀을 보여주기위함
+		BlogVo vo1=blogService.showtitle(authUser.getNo());	//blog-admin-basic.jsp�뙆�씪�뿉 vo�쓽 ���씠���쓣 蹂댁뿬二쇨린�쐞�븿
 		UserVo vo2=userService.getById(authUser.getId());
 		
 		
@@ -64,20 +65,21 @@ public class BlogController {
 	}
 	
 	@RequestMapping("/{id}/modifyView")
-	public String modiftView(@RequestParam(value="title",required=true,defaultValue="1") String blogtitle,//수정된 타이틀을 update하기위해 requestParam으로 받아온다
-							 @RequestParam(value="logo-file",required=true,defaultValue="1") String image,
+	public String modiftView(@RequestParam(value="title",required=true,defaultValue="1") String blogtitle,//�닔�젙�맂 ���씠���쓣 update�븯湲곗쐞�빐 requestParam�쑝濡� 諛쏆븘�삩�떎
+							 @RequestParam(value="logo-file") MultipartFile file,//파일업로드를 하기위해 MultipartFile을 불러온다
 				@PathVariable("id") String id,
-				@AuthUser UserVo authUser,
-				@ModelAttribute BlogVo vo){
+				@AuthUser UserVo authUser,//authuser는 거의 필수인듯
+				@ModelAttribute BlogVo vo){//modify할때 일단 수정 창에서 title과 logo-file 이름을 가져오기 위해 requestParam을 썻다
 		if(authUser==null){
+			
 			System.out.println("error");
 		}
-		System.out.println(image);
-		vo.setUsers_no(authUser.getNo());
-		vo.setTitle(blogtitle);
+		vo.setUsers_no(authUser.getNo());//user의 no와 blog의 userno을 비교하기 위해 user_no를 blog의 user_no set 해준다
+		vo.setTitle(blogtitle);//바뀐 타이틀을 새로 setTitle한다
+//		vo.setLogo(file);
 		
-		blogService.modify(vo);
-		System.out.println(vo.getTitle());
+		blogService.modify(vo,file);//그냥 넣고 싶은거 넣어라
+	
 		
 		
 		

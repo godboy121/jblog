@@ -27,7 +27,7 @@
 	
 	<update id="update" parameterType="blogvo" >
 	 <![CDATA[    
-      update blog set title=#{title} where users_no=#{users_no}
+      update blog set title=#{title},logo=#{logo} where users_no=#{users_no}
    ]]> 
 	</update>
 

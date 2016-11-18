@@ -45,7 +45,8 @@
 	</mvc:annotation-driven>
 
 	<!-- the mvc resources tag does the magic -->
-	<mvc:resources mapping="/upload-images/**" location="file:/upload/" />
+	 <!-- <mvc:resources mapping="/upload-images/**" location="file:/upload/" /> 을 밑에껄로 바꾼다--> 
+	<mvc:resources mapping="/assets/logo/**" location="file:/upload/" />
 
 
 
