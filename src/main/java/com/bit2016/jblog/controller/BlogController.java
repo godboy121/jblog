@@ -1,5 +1,7 @@
 package com.bit2016.jblog.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import com.bit2016.jblog.security.AuthUser;
 import com.bit2016.jblog.service.BlogService;
 import com.bit2016.jblog.service.UserService;
 import com.bit2016.jblog.vo.BlogVo;
+import com.bit2016.jblog.vo.CategoryVo;
 import com.bit2016.jblog.vo.UserVo;
 
 @Controller
@@ -81,10 +84,45 @@ public class BlogController {
 		blogService.modify(vo,file);//그냥 넣고 싶은거 넣어라
 	
 		
-		
-		
-		
 		return "redirect:/"+id;
+	}
+	
+	//카테고리 창 띄우기
+	@RequestMapping("/{id}/admin/category")
+	public String viewCategory(Model model,@ModelAttribute BlogVo vo,
+			@AuthUser UserVo authUser)			
+	{
+		vo.setUsers_no(authUser.getNo());
+		List<CategoryVo> list=blogService.list(vo);
+		model.addAttribute("list", list);
+		
+		return "blog/blog-admin-category";
+	}
+	
+	//카테고리 추가 컨트롤러 
+	@RequestMapping("/{id}/admin/addcategory")
+	public String addCategory(@PathVariable("id") String id,
+			@AuthUser UserVo authUser,
+			@ModelAttribute BlogVo vo2,
+			@ModelAttribute CategoryVo vo,
+			@RequestParam(value="name") String category_name,
+			@RequestParam(value="desc") String category_desc)
+	{
+		
+		
+		vo.setUsers_no(authUser.getNo());
+		vo.setName(category_name);
+		vo.setDescription(category_desc);
+		
+		blogService.addcategory(vo);
+		
+		return "redirect:/"+id+"/admin/category";
+	}
+	
+	
+	@RequestMapping("/{id}/admin/write")
+	public String viewWrite(){
+		return "blog/blog-admin-write";
 	}
 	
 	

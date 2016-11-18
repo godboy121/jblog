@@ -2,6 +2,7 @@ package com.bit2016.jblog.service;
 
 import java.io.FileOutputStream;
 import java.util.Calendar;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bit2016.jblog.repository.BlogDao;
 import com.bit2016.jblog.vo.BlogVo;
+import com.bit2016.jblog.vo.CategoryVo;
 
 @Service
 public class BlogService {
@@ -26,10 +28,10 @@ public class BlogService {
 	public void modify(BlogVo vo,MultipartFile file){
 		
 		try{
-			if(file.isEmpty()==true){//ÀÏ´Ü fileÀÌ ºñ¾ú´ÂÁö Ã¼Å©
+			if(file.isEmpty()==true){//ï¿½Ï´ï¿½ fileï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
 				System.out.println("error");
 			}
-			//ÆÄÀÏÀ» c:/upload¿¡ ÀúÀåÇÏ±âÀ§ÇØ ÀÌ¸§À» º¯È¯Áß 
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ c:/uploadï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ 
 			String originalName = file.getOriginalFilename();
 
 			String extName = originalName.substring(originalName.lastIndexOf('.') + 1, originalName.length());
@@ -63,9 +65,18 @@ public class BlogService {
 	private void writeFile(MultipartFile multipartFile, String saveName) throws Exception {
 
 		byte[] fileData = multipartFile.getBytes();
-		FileOutputStream fos = new FileOutputStream(SAVE_PATH + "/" + saveName);//ÀÌ¹ÌÁöÆÄÀÏÀ» ÇØ´ç Àå¼Ò¿¡ ÀúÀå
+		FileOutputStream fos = new FileOutputStream(SAVE_PATH + "/" + saveName);//ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½Ò¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-		fos.write(fileData);//ÀÌ¹ÌÁöÆÄÀÏÀ» ÇØ´ç Àå¼Ò¿¡ ÀúÀå
+		fos.write(fileData);//ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½Ò¿ï¿½ ï¿½ï¿½ï¿½ï¿½
+	}
+	
+	public void addcategory(CategoryVo vo){
+		blogDao.addcategory(vo);
+	}
+	
+	public List<CategoryVo> list(BlogVo vo){
+		
+		return blogDao.getList(vo);
 	}
 	
 	

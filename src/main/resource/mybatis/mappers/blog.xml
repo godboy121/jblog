@@ -25,11 +25,33 @@
 	]]>
 	</select>
 	
+	<!--  블로그관리에서 변경된 title과 logo를 update해주는 sql -->
 	<update id="update" parameterType="blogvo" >
 	 <![CDATA[    
       update blog set title=#{title},logo=#{logo} where users_no=#{users_no}
    ]]> 
 	</update>
+	
+	
+	<!-- 카테고리 추가에서 카테고리 명과 설명 및  유저번호 cateogory db에 넣어주기 -->
+	<insert id="addcategory" parameterType="blogvo">
+	
+	<![CDATA[
+	insert into category values( category_seq.nextval,
+	 #{name},#{description},sysdate,#{users_no})
+
+	
+	]]>
+	</insert>
+	
+	<select id="getList" parameterType="blogvo" resultType="categoryvo">
+	<![CDATA[
+	select category_no,name,description from category where users_no=#{users_no}
+	]]>
+	
+	
+	</select>
+	
 
 	
 
